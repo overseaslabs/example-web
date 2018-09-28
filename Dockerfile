@@ -4,7 +4,7 @@
 
 FROM node:latest AS FRONTEND_BUILDER
 
-ARG MODE
+ARG MODE=dev
 
 RUN apt-get update -y && apt-get install --no-install-recommends -y \
     build-essential cmake libtool autoconf automake m4 nasm pkg-config libpng-dev nasm \
@@ -12,7 +12,7 @@ RUN apt-get update -y && apt-get install --no-install-recommends -y \
 
 #make the project dir
 ENV APP_HOME=/proj
-RUN mkdir -p  $APP_HOME
+RUN mkdir -p  $APP_HOME && mkdir $APP_HOME/build
 WORKDIR $APP_HOME
 
 COPY frontend/package.json frontend/package-lock.json $APP_HOME/
