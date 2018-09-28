@@ -4,6 +4,8 @@
 
 FROM node:latest AS FRONTEND_BUILDER
 
+ARG MODE
+
 RUN apt-get update -y && apt-get install --no-install-recommends -y \
     build-essential cmake libtool autoconf automake m4 nasm pkg-config libpng-dev nasm \
     && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -22,7 +24,7 @@ RUN npm install
 COPY frontend/. .
 
 #run webpack
-RUN npm run dev
+RUN npm run $MODE
 
 ########################
 # BACKEND BUILD IMAGE
@@ -63,7 +65,7 @@ LABEL vendor="Overseas Labs Limited" \
       vendor.website="http://overseaslsbs.com" \
       description="Web UI" \
       project="Example project" \
-      tag="overseaslabs/example-web"
+      tag="overseaslabs/example-web:1.0.0"
 
 EXPOSE 8080
 
